@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ElasticSearch document generator</title>
+
+	<meta charset="utf-8">
+
+
+	<!-- choose a theme file -->
+	<link rel="stylesheet" href="js/tablesorter-master/css/theme.default.css">
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+	<!-- Latest compiled and minified JavaScript -->
+	<link rel="stylesheet" href="css/datepicker.min.css"/>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/datepicker.js"></script>
+	<script type="text/javascript" src="js/tablesorter-master/js/jquery.tablesorter.js"></script>
+	<script type="text/javascript" src="js/tablesorter-master/js/jquery.tablesorter.widgets.js"></script>
+	<script type="text/javascript" src="js/handlebars-v4.0.5.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+
+
+	<!--<script src="socket.io.js"></script>-->
+	<!--<script type="text/javascript" src="https://cdn-orig.socket.io/socket.io-1.7.3.js"></script>-->
+	
+	<style type="text/css">
+	    .bord/*.row, .col-md-12, .col-md-4, .col-md-6*/ { 
+	    	border: 1px solid black;
+	    	border-radius: 5px;
+
+	    }
+	    #results{
+	    	display: none;
+	    }
+	    #loading{
+	    	display: none;	
+	    }
+	    #conteiner{
+	    	display: none;
+	    }
+	    .log{
+	    	font-size: 12px;
+	    }
+	</style>
+
+
+
+</head>
+
+
+<body>
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 bord">
+				<h2>ElasticSearch Document Generator</h2>
+			</div>
+		</div>
+		<div class="row bord">
+			<div class="col-md-4">
+				<p>
+				<h3>Select dates:</h3>
+				<p>
+				ОТ : <input type='text' class="datepicker-here" id="date_from" data-position="right top" />
+				<p>
+				ДО : <input type='text' class="datepicker-here" id="date_to" data-position="right top" />
+				<p>
+			</div>
+			<div class="col-md-4">
+				<div class="row">
+					<div class="col-md-12">
+						<h3>Document options</h3>
+					</div>
+				<div class="row" id="options">
+					
+				</div>
+				
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="row">
+					<div class="col-md-12">
+						<h3>Start</h3>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<button type="button" class="btn btn-lg btn-success" id="start">Start</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- STATUS -->
+		<div class="row bord">
+			<div class="col-md-12">
+				<h3>Status:</h3>
+				<h4 id="status" class="log"></h3>
+			</div>
+		</div>
+		<!-- END STATUS -->
+
+		<div class="row bord">
+			<div class="col-md-12">
+				<h3>Results:</h3>
+			</div>
+		</div>
+
+		<!-- RESULT -->
+
+		<div class="row" id="loading">
+			<div class="col-md-5"></div>
+			<div class="col-md-2">
+				<img src="img/loading.gif" width="150x">
+			</div>
+			<div class="col-md-5"></div>
+		</div>
+
+		<div class="row bord" id="results">
+			<div class="col-md-10">
+				<table class="table table-bordered tablesorter" id="result_table">
+	
+			      </table>		
+			</div>
+			<div class="col-md-2">
+				<div class="row">
+					<h3>Download</h3>
+					<div class="col-md-12">
+						В .XLSX
+						<a id="xlsx" href="lorem.html">
+							<img src="img/xlsx.png" alt="Формат для MS EXCEL" width="40px">
+						</a>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						В .CSV&nbsp;
+						<a id="csv" href="lorem.html">
+							<img src="img/csv.png" alt="Формат для машинной обработки"  width="40px">
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<script id="template" type="text/x-handlebars-template">
+		{{#each fields_for_query}}
+				<div class="row">
+					<div class="col-md-6">
+						{{html_desc}} : <input type='text' id="id" style="width:100px" field="{{field}}">
+					</div>
+				</div>
+		{{/each}}
+	</script>
+
+
+
+
+	<script type="text/javascript">
+		let socket = new WebSocket("ws://localhost:3000");
+		
+
+		socket.onopen = function() {
+			console.log("Соединение установлено.");
+			$('.container').css({"display":"block"});
+
+
+
+
+			let send_request = (function(){
+
+				
+			})();
+		
+		$("#start").click(send_request);
+
+
+
+
+
+
+
+			
+		};
+		socket.onclose = function(event) {
+			if (event.wasClean) {
+				console.log('Соединение закрыто чисто');
+			} else {
+			    console.log('Обрыв соединения со стороны сервера');
+			}
+			  	console.log('Код: ' + event.code + ' причина: ' + event.reason);
+		};
+		socket.onmessage = function(event) {
+			let answer = JSON.parse(event.data);
+		  	console.log("Получены данные");
+		  	console.log(answer);
+		  	
+		  	if (answer.status == "connect"){
+		  		$('#status').css({"display":"block"});
+		  		//$('#status').html('<font color="green">'+answer.desc+'</font>');
+		  		$('#status').append('<p><font color="green">'+answer.desc+'</font></p>');
+		  	}
+		  	else if (answer.status == "error"){
+		  		//$('#status').css({"display":"block"});
+		  		$('#loading').css({"display":"none"});
+		  		$('#status').append('<p><font color="red">'+answer.desc+'</font></p>');
+		  	}
+		  	else if (answer.status == "ok"){
+		  		//$('#status').css({"display":"block"});
+		  		$('#status').append('<p><font color="green">'+answer.desc+'</font></p>');
+		  	}
+		  	else if (answer.status == "new_table"){
+		  		//$('#status').css({"display":"block"})
+		  		$('#loading').css({"display":"none"});
+		  		$('#results').css({"display":"block"});
+		  		$('#result_table').html("");
+		  		$('#result_table').html(answer.desc);
+		  		$("#result_table").tablesorter();
+		  	}
+		  	else if (answer.status == "xls"){
+		  		$("#xlsx").attr("href", 'docs/'+answer.desc);		  		
+		  	}
+		  	else if (answer.status == "csv"){
+		  		$("#csv").attr("href", 'docs/'+answer.desc);		  		
+		  	}
+
+
+
+		  	
+				
+
+
+		};
+		socket.onerror = function(error) {
+		  console.log("Ошибка " + error.message);
+		};
+
+
+
+	</script>
+</body>
+
+
+
+</html>
+																																									
+
+
+
+
+
+																																

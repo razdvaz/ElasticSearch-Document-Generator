@@ -1,0 +1,38 @@
+{
+  "name": "eldg",
+  "version": "0.0.1",
+  "description": "ElasticSearch Document Generator",
+  "main": "app.js",
+  "dependencies": {
+    "async": "^2.1.5",
+    "csv-write-stream": "^2.0.0",
+    "express": "^4.15.0",
+    "handlebars": "^4.0.6",
+    "json2xls": "^0.1.2",
+    "request": "^2.79.0",
+    "ws": "^2.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/razdvaz/ElasticSearch-Document-Generator.git"
+  },
+  "keywords": [
+    "elasticsearch",
+    "elastic",
+    "document",
+    "generator",
+    "elasticsearch",
+    "document",
+    "generator"
+  ],
+  "author": "razdvaz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/razdvaz/ElasticSearch-Document-Generator/issues"
+  },
+  "homepage": "https://github.com/razdvaz/ElasticSearch-Document-Generator#readme"
+}

@@ -1,0 +1,10 @@
+{
+	"server_port"  	  : 8080,
+	"websocket_port"  : 3000,
+	"aggs_size"	  	  : 500,
+	"correction_time" : 10800000,
+	"one_day" 		  : 86400000,
+	"index"			  : "http://ElasticSerachDataBase.example:9200/index-*/_search/",
+	"path_to_storage" : "../public/storage/"
+
+}

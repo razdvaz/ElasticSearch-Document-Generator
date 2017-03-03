@@ -1,0 +1,10 @@
+{
+	"key_agg"		     : {"field" : "city", "html_desc" : "city"},
+	"fields_for_query"	 : [
+		{"field" : "browser", "html_desc" : "browser_1"},
+		{"field" : "browser", "html_desc" : "browser_2"},
+		{"field" : "os", "html_desc" : "os_1"},
+		{"field" : "os", "html_desc" : "os_2"},
+		{"field" : "os", "html_desc" : "os_3"}
+	]
+}
