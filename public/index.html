@@ -79,10 +79,15 @@
 					<select id="key_agg">
 					</select>
 				</div>
-				<div class="row">
-					<select id="options">
+				<div class="row" id="option_list">
+					<select class="options">
 					</select>
+					<input type='text' class="options_text">
 				</div>
+				<div class="row">
+					<img src="img/plus.png" alt="добавить поле" width="40px" id='add_field'>	
+				</div>
+				
 				
 				</div>
 			</div>
@@ -154,22 +159,6 @@
 	</div>
 
 
-
-	<script id="template_key_agg" type="text/x-handlebars-template">
-		{{#each key_agg}}
-					<option>{{html_desc}}</option>
-		{{/each}}
-	</script>
-
-	<script id="template_options" type="text/x-handlebars-template">
-		{{#each fields_for_query}}
-					<option>{{html_desc}}</option>
-		{{/each}}
-	</script>
-
-
-
-
 	<script type="text/javascript">
 		let socket = new WebSocket("ws://localhost:3000");
 		
@@ -178,15 +167,28 @@
 			console.log("Соединение установлено.");
 			$('.container').css({"display":"block"});
 
+			function send_request(){
+				let array_to_request = {};
+				array_to_request.date_from = $('#date_from').val();
+				array_to_request.date_to = $('#date_to').val();
+				array_to_request.key_agg = $('#key_agg').val();
+				array_to_request.fields = [];
 
+				$('.options').each(function(i, el){
+					console.log($(el).val());
+					console.log($(el).next(".options_text").val())
 
+					array_to_request.fields.push({"field" : $(el).val(), "value" : $(el).next(".options_text").val()})
+				})
 
-			let send_request = (function(){
+				console.log(array_to_request);
 
 				
-			})();
+
+				
+			}
 		
-		$("#start").click(send_request);
+			$("#start").click(send_request);
 
 
 
@@ -196,6 +198,7 @@
 
 			
 		};
+
 		socket.onclose = function(event) {
 			if (event.wasClean) {
 				console.log('Соединение закрыто чисто');
@@ -250,6 +253,9 @@
 		};
 
 
+		$('#add_field').click(function(){
+			$('#option_list').append('<p><select class="options">'+$('.options').last().html()+'<select><input type="text" class="options_text"></p>');
+		})
 
 	</script>
 </body>
