@@ -10,6 +10,7 @@
 		{"field" : "country", "html_desc" : "country"},
 		{"field" : "browser", "html_desc" : "browser"},
 		{"field" : "os", "html_desc" : "os"},
-		{"field" : "ip", "html_desc" : "ip"}
+		{"field" : "ip", "html_desc" : "ip"},
+		{"field" : "gender", "html_desc" : "gender"}
 	]
 }
