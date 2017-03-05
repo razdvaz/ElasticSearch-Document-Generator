@@ -74,8 +74,14 @@
 					<div class="col-md-12">
 						<h3>Document options</h3>
 					</div>
-				<div class="row" id="options">
-					
+
+				<div class="row">
+					<select id="key_agg">
+					</select>
+				</div>
+				<div class="row">
+					<select id="options">
+					</select>
 				</div>
 				
 				</div>
@@ -149,13 +155,15 @@
 
 
 
-	<script id="template" type="text/x-handlebars-template">
+	<script id="template_key_agg" type="text/x-handlebars-template">
+		{{#each key_agg}}
+					<option>{{html_desc}}</option>
+		{{/each}}
+	</script>
+
+	<script id="template_options" type="text/x-handlebars-template">
 		{{#each fields_for_query}}
-				<div class="row">
-					<div class="col-md-6">
-						{{html_desc}} : <input type='text' id="id" style="width:100px" field="{{field}}">
-					</div>
-				</div>
+					<option>{{html_desc}}</option>
 		{{/each}}
 	</script>
 
