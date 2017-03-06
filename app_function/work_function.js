@@ -118,22 +118,46 @@ function simple_agg(url, query, callback, key){
 
 function merge(input){
 	let obj_table = [];
-	console.log('---------------------------')
 	
-
-	function a(key, array){
+	function select_value(key, array){
 		for (let i of array){
-			if (key == i.key){
-				console.log(array.field);
-				console.log(key);
-				console.log(i.doc_count);	
-				console.log('------------');	
-			} 
-
+			if (key == i.key) return i.doc_count
 		}
+		return 0
 	}
 
+	if (input[0].key_agg){
+
+		for (let key of input[0].res){
+			let temp = {};
+			temp[input[0].key_agg[0]] = key;
+			
+			for (let i=1;i<input.length;i++){
+				let field = input[i].field;
+				let value = select_value(key, input[i].res);
+				temp[field] = value;	
+			}
+			obj_table.push(temp)
+		}
+		
+	}	
+
+	return obj_table;
 }
+
+function new_table(data){
+	let table = "<table class='table table-bordered tablesorter' id='result_table'><thead><tr>";
+	for(let thead in data[0]) table+="<th>"+thead+"</th>";
+	table += "</tread><tbody>";
+	for(let el of data){
+		table += "<tr>";
+		for(tbody in el) table+="<td>"+el[tbody]+"</td>";
+		table += "</tr>";
+	}
+	table += "</tbody></table>";
+	return table;
+}
+
 
 
     
@@ -153,3 +177,4 @@ module.exports.agg_json = agg_json;
 module.exports.first_query = first_query;
 module.exports.second_queries = second_queries;
 module.exports.merge = merge;
+module.exports.new_table = new_table;

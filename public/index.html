@@ -121,10 +121,10 @@
 		</div>
 
 		<div class="row bord" id="results">
-			<div class="col-md-10">
-				<table class="table table-bordered tablesorter" id="result_table">
+			<div class="col-md-10" id="div_for_result">
+				
 	
-			      </table>		
+			      	
 			</div>
 			<div class="col-md-2">
 				<div class="row">
@@ -148,8 +148,11 @@
 		</div>
 	</div>
 
+	
+
 
 	<script type="text/javascript">
+	
 		let socket = new WebSocket("ws://localhost:3000");	
 
 		socket.onopen = function() {
@@ -203,10 +206,12 @@
 		  		$('#status').append('<p><font color="green">'+answer.desc+'</font></p>');
 		  	}
 		  	else if (answer.status == "new_table"){
+		  		//console.log(answer);
 		  		$('#loading').css({"display":"none"});
 		  		$('#results').css({"display":"block"});
-		  		$('#result_table').html("");
-		  		$('#result_table').html(answer.desc);
+		  		//$('#result_table').html("");
+		  		$('#div_for_result').html(answer.desc);
+		  		console.log($('#result_table').html());
 		  		$("#result_table").tablesorter();
 		  	}
 		  	else if (answer.status == "xls"){
@@ -226,6 +231,7 @@
 		})
 
 	</script>
+
 </body>
 
 

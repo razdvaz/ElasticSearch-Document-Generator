@@ -36,7 +36,11 @@ webSocketServer.on('connection', function(ws) {
 			if (err) console.log(err)
 			else{
 				console.log(res)
-				F.merge(res);
+				let answer = F.merge(res);
+				console.log(answer)
+				let new_table = F.new_table(answer);
+				console.log(new_table);
+				ws.send(send_status("new_table", new_table));
 			}
 		})	
 	})
