@@ -2,7 +2,6 @@
 let config = require('./config/config');
 let fields = require('./config/fields');
 let fs = require('fs');
-let request = require('request');
 let async = require('async');
 let json2xls = require('json2xls');
 let csvWriter = require('csv-write-stream');

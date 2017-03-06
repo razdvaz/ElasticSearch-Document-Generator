@@ -182,6 +182,8 @@
 				})
 
 				console.log(array_to_request);
+				//console.log(JSON.stringify(array_to_request))
+				socket.send(JSON.stringify(array_to_request));
 
 				
 
