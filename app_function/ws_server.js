@@ -14,7 +14,6 @@ webSocketServer.on('connection', function(ws) {
 	ws.on('message', function(message){
 		
 		let array_to_request = JSON.parse(message);
-		console.log(array_to_request);
 
 		//формирование объекта с датой
 		let date_json = F.date_json(array_to_request.date_from, array_to_request.date_to, config.correction_time);
@@ -25,18 +24,13 @@ webSocketServer.on('connection', function(ws) {
 			"query" : {"bool" : {"must" : []} },
 			"aggs"  : agg_json
 		};
-
 		let first_query = F.first_query(date_json, agg_json, config.index, base_query);
 		let list = [];
-		console.log('first_query');
-		console.log('------');
 		list.push(first_query);
-		//формирование остальных запросов
-
+		//формирование остальных запросов по отдельным полям
 		for(let i of array_to_request.fields){
 			list.push(F.second_queries(date_json, agg_json, config.index, base_query, i));
-		}
-		
+		}		
 		//go query;
 		async.series(list, function(err, res){
 			if (err) console.log(err)
@@ -44,14 +38,7 @@ webSocketServer.on('connection', function(ws) {
 				console.log(res)
 				F.merge(res);
 			}
-		})
-
-		
-		//function merge(input){
-
-		//}		
-		
-
+		})	
 	})
 
 });

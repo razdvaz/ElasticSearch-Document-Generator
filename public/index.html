@@ -4,28 +4,18 @@
 	<title>ElasticSearch document generator</title>
 
 	<meta charset="utf-8">
-
-
-	<!-- choose a theme file -->
 	<link rel="stylesheet" href="js/tablesorter-master/css/theme.default.css">
-	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-	<!-- Optional theme -->
 	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-	<!-- Latest compiled and minified JavaScript -->
 	<link rel="stylesheet" href="css/datepicker.min.css"/>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/datepicker.js"></script>
 	<script type="text/javascript" src="js/tablesorter-master/js/jquery.tablesorter.js"></script>
 	<script type="text/javascript" src="js/tablesorter-master/js/jquery.tablesorter.widgets.js"></script>
-	<script type="text/javascript" src="js/handlebars-v4.0.5.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
-
-
-	<!--<script src="socket.io.js"></script>-->
-	<!--<script type="text/javascript" src="https://cdn-orig.socket.io/socket.io-1.7.3.js"></script>-->
 	
+	<!-- css в последнюю очередь. как будет готова работающая серверная часть -->
 	<style type="text/css">
 	    .bord/*.row, .col-md-12, .col-md-4, .col-md-6*/ { 
 	    	border: 1px solid black;
@@ -85,7 +75,7 @@
 					<input type='text' class="options_text">
 				</div>
 				<div class="row">
-					<img src="img/plus.png" alt="добавить поле" width="40px" id='add_field'>	
+					<img src="img/plus.png" width="40px" id='add_field'>	
 				</div>
 				
 				
@@ -160,8 +150,7 @@
 
 
 	<script type="text/javascript">
-		let socket = new WebSocket("ws://localhost:3000");
-		
+		let socket = new WebSocket("ws://localhost:3000");	
 
 		socket.onopen = function() {
 			console.log("Соединение установлено.");
@@ -182,23 +171,10 @@
 				})
 
 				console.log(array_to_request);
-				//console.log(JSON.stringify(array_to_request))
-				socket.send(JSON.stringify(array_to_request));
-
-				
-
-				
+				socket.send(JSON.stringify(array_to_request));			
 			}
 		
-			$("#start").click(send_request);
-
-
-
-
-
-
-
-			
+			$("#start").click(send_request);		
 		};
 
 		socket.onclose = function(event) {
@@ -209,6 +185,7 @@
 			}
 			  	console.log('Код: ' + event.code + ' причина: ' + event.reason);
 		};
+
 		socket.onmessage = function(event) {
 			let answer = JSON.parse(event.data);
 		  	console.log("Получены данные");
@@ -216,20 +193,16 @@
 		  	
 		  	if (answer.status == "connect"){
 		  		$('#status').css({"display":"block"});
-		  		//$('#status').html('<font color="green">'+answer.desc+'</font>');
 		  		$('#status').append('<p><font color="green">'+answer.desc+'</font></p>');
 		  	}
 		  	else if (answer.status == "error"){
-		  		//$('#status').css({"display":"block"});
 		  		$('#loading').css({"display":"none"});
 		  		$('#status').append('<p><font color="red">'+answer.desc+'</font></p>');
 		  	}
 		  	else if (answer.status == "ok"){
-		  		//$('#status').css({"display":"block"});
 		  		$('#status').append('<p><font color="green">'+answer.desc+'</font></p>');
 		  	}
 		  	else if (answer.status == "new_table"){
-		  		//$('#status').css({"display":"block"})
 		  		$('#loading').css({"display":"none"});
 		  		$('#results').css({"display":"block"});
 		  		$('#result_table').html("");
@@ -241,19 +214,12 @@
 		  	}
 		  	else if (answer.status == "csv"){
 		  		$("#csv").attr("href", 'docs/'+answer.desc);		  		
-		  	}
-
-
-
-		  	
-				
-
-
+		  	}  				
 		};
+
 		socket.onerror = function(error) {
 		  console.log("Ошибка " + error.message);
 		};
-
 
 		$('#add_field').click(function(){
 			$('#option_list').append('<p><select class="options">'+$('.options').last().html()+'<select><input type="text" class="options_text"></p>');

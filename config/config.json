@@ -4,7 +4,7 @@
 	"aggs_size"	  	  : 10,
 	"correction_time" : 10800000,
 	"one_day" 		  : 86400000,
-	"index"			  : "http://example.example.net:9200/index-*/_search/",
+	"index"			  : "http://test.test.com:9200/index-*/_search/",
 	"path_to_storage" : "../public/storage/"
 
 }

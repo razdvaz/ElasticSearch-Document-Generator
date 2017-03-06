@@ -27,12 +27,8 @@ function gen_template_fields (config_fields) {
 }
 
 function date_json(date_from, date_to, correction_time){
-	//console.log(date_from)
-	//console.log(date_to)
-	//console.log(correction_time)
 	let d_from = new Date(get_normal_date(date_from));
     let d_from_ms = d_from.getTime() - correction_time;
-
     let d_to = new Date(get_normal_date(date_to));
     let d_to_ms = d_to.getTime() - correction_time;
 	
@@ -55,12 +51,9 @@ function agg_json(key_agg, size){
 
 function first_query(date_json, agg_json, url, base_query){
 	return function(callback){
-		console.log('agg_json');
-		console.log(agg_json);
 		let base_q = clone(base_query);
 		base_q.query.bool.must.push(date_json);
 		base_q.aggs = agg_json;
-		console.log(JSON.stringify(base_q));
         simple_agg(url, base_q, next, 'key');
 
         function next(res){
@@ -71,19 +64,14 @@ function first_query(date_json, agg_json, url, base_query){
 }
 
 function second_queries(date_json, agg_json, url, base_query, field){
-
 	return function(callback){
-		console.log(field)
 		let base_q = clone(base_query);
 		base_q.query.bool.must.push({"match" : { [field.field] : field.value } });
 		base_q.query.bool.must.push(date_json);
 		base_q.aggs = agg_json;
-		console.log('======!!!!!!==========');
-		console.log(JSON.stringify(base_q));
         simple_agg(url, base_q, next);
 
         function next(res){
-        	//console.log(res);
         	let answer = {"field" : [field.field]+'-'+[field.value], "res" : res}
           callback(null, answer);
         }
@@ -102,11 +90,9 @@ function params_for_request(url, query){
 
 function simple_agg(url, query, callback, key){ 
   request( params_for_request(url, query),
-
   function(err, response, body){
     if (err) console.log(err);
     else {
-
       var result_aggs = body.aggregations.group.buckets;
 
       if (result_aggs.length > 0){
@@ -125,7 +111,6 @@ function simple_agg(url, query, callback, key){
         else {
            callback(result_aggs); 
         }
-
       }
     }
   })

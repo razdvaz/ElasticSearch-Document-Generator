@@ -12,7 +12,7 @@ let F = new require('./app_function/work_function.js');
 
 let template_fields = F.gen_template_fields(fields);
 fs.writeFile('./public/data.json', JSON.stringify(template_fields), function(){
-	console.log('ok');
+	console.log('load config ok...');
 })
 console.log(template_fields);
 
@@ -22,7 +22,7 @@ app.use(express.static('public'));
 
 
 app.listen(config.server_port, function () {
-  console.log('start!');
+  console.log('http server ok...');
 });
 
 app.get('/', function (req, res) {
