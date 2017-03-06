@@ -10,5 +10,5 @@ todo:
 - floating icons
 - adding special fields
 - client schema
-- go ti es6
+- go to es6
 - add async mode
