@@ -3,8 +3,9 @@
 Application for creating reports with tables. It uses ElasticSearch.
 
 todo:
-- visualize the output of final tables
-- add the ability to remove the fields
+- visualize the output of final tables (+)
+- add the ability to remove the fields 
+- add key filters
 - refactoring
 - adding checks parameters
 - floating icons
