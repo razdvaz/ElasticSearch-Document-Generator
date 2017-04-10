@@ -4,11 +4,6 @@
 	"aggs_size"	  	  : 10,
 	"correction_time" : 10800000,
 	"one_day" 		  : 86400000,
-<<<<<<< HEAD
 	"index"			  : "http://test.test.test:9200/test-*/_search/",
-=======
-	"index"			  : "http://kibana.advmt.org:9200/fs-ad_profit-*/_search/",
->>>>>>> f5e647de59198b4ec320403f994859cce6a2ff92
 	"path_to_storage" : "../public/storage/"
-
 }

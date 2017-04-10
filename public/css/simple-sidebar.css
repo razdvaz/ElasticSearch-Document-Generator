@@ -11,11 +11,12 @@
 /* Toggle Styles */
 
 #menu-toggle{
-    z-index: 1001;
+    z-index: 81;
     position: fixed;
     background: red;
     height: 100%;
     width: 10px;
+    cursor: pointer;
 
 }
 
@@ -32,13 +33,14 @@
 }
 
 #sidebar-wrapper {
-    z-index: 1000;
+    z-index: 80;
     position: fixed;
     left: 250px;
     width: 0;
     height: 100%;
     margin-left: -250px;
-    overflow-y: auto;
+    overflow-y: hidden;
+    overflow-x: hidden;
     background: #000;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
@@ -73,7 +75,7 @@
 }
 
 .sidebar-nav li {
-    text-indent: 20px;
+    text-indent: 15px;
     line-height: 40px;
 }
 
@@ -95,8 +97,8 @@
 }
 
 .sidebar-nav > .sidebar-brand {
-    height: 65px;
-    font-size: 18px;
+    height: 40px;
+    font-size: 14px;
     line-height: 60px;
 }
 
